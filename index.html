@@ -11,4 +11,31 @@ Copyright (c) 2022 Bruno Zhong. All rights reserved.
 - <kbd>echo</kbd> &mdash; Print out a message (Coming Soon)
 - <kbd>color</kbd> &mdash; Change the color. <kbd>R</kbd>: Red; <kbd>O</kbd>: Orange; <kbd>Y</kbd>: Yellow; <kbd>G</kbd>: Green, <kbd>B</kbd>: Blue, <kbd>P</kbd>: Purple.
   Other colors: <kbd>W</kbd>: White; <kbd>BL</kbd>: Black. (Coming Soon)
+  
 </pre>
+
+<script>
+  (function() {
+    var id = "x"
+    var curr = ""
+    var cmd = document.getElementsByTagName("pre")[0]
+    function createNextTextField() {
+      curr = "txt-fld-" + id
+      id += "x"
+      let elem = document.createElement("input")
+      elem.type = "text"
+      elem.id = curr
+      cmd.append("> ")
+      cmd.appendChild(elem)
+      elem.addEventListener("keydown", function(event) {
+        if event.code == "Enter" {
+          elem.disabled = true
+          if elem.value.startsWith("echo ") {
+            cmd.append(`\n ${elem.value.substring(5)}`)
+          }
+        }
+        createNextTextField()
+      })
+    }
+  })()
+</script>
